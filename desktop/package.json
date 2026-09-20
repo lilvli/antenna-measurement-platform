@@ -1,0 +1,68 @@
+{
+  "name": "antenna-range-desktop",
+  "version": "0.1.0",
+  "description": "Windows antenna calibration and radiation-pattern measurement desktop",
+  "author": "Antenna Engineering Team",
+  "packageManager": "pnpm@11.19.0",
+  "private": true,
+  "main": "out/main/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit",
+    "test:workflows": "node scripts/test-workflow-regressions.mjs",
+    "check:renderer": "node scripts/check-dev-renderer.mjs",
+    "package:win": "electron-vite build && electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "electron-vite": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  },
+  "build": {
+    "appId": "cn.antenna.range.desktop",
+    "productName": "天线标校与方向图测试平台",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../service/dist/antenna-control-service.exe",
+        "to": "service/antenna-control-service.exe"
+      },
+      {
+        "from": "resources/turntable/ImacFxDll.dll",
+        "to": "drivers/turntable/ImacFxDll.dll"
+      },
+      {
+        "from": "resources/turntable/Interop.PCOMMSERVERLib.dll",
+        "to": "drivers/turntable/Interop.PCOMMSERVERLib.dll"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "license": "GPL-3.0-only"
+}

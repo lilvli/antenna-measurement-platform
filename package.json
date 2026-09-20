@@ -1,0 +1,13 @@
+{
+  "name": "antenna-measurement-platform",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "pnpm --dir desktop dev",
+    "build": "pnpm --dir desktop build",
+    "test": "pnpm --dir desktop typecheck && pnpm --dir desktop test:workflows && .venv\\Scripts\\python.exe -m pytest service/tests --basetemp .tmp/pytest",
+    "build:service": ".venv\\Scripts\\python.exe -m PyInstaller --noconfirm --clean --distpath service/dist --workpath service/build service/antenna-control-service.spec",
+    "package:win": "pnpm run build:service && pnpm --dir desktop package:win"
+  },
+  "license": "GPL-3.0-only"
+}

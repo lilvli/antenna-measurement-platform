@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "antenna-control-service"
+version = "0.1.0"
+description = "Local measurement and control service for the antenna range desktop application"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+  "pydantic>=2.10,<3",
+  "openpyxl>=3.1,<4",
+  "numpy>=2.0,<3",
+  "h5py>=3.12,<4",
+  "pyserial>=3.5,<4",
+  "pyvisa>=1.14,<2",
+  "pythonnet>=3.0.5,<4; platform_system == 'Windows'"
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.3,<9",
+  "pytest-asyncio>=0.25,<1",
+  "httpx>=0.28,<1"
+]
+build = [
+  "pyinstaller>=6.15,<7"
+]
+
+[project.scripts]
+antenna-control-service = "antenna_service.main:run"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["antenna_service*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+cache_dir = "../.tmp/pytest-cache"
